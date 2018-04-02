@@ -333,9 +333,12 @@ public class MyWebAct extends FragmentActivity {
 
         //Dom缓存
         webSettings.setDomStorageEnabled(true);//默认false
-
+        //存储一些简单的用key/value对即可解决的数据，根据作用范围的不同，有Session Storage和Local Storage两种，
+        //分别用于会话级别的存储（页面关闭即消失）和本地化存储（除非主动 删除，否则数据永远不会过期）
+        
         //database缓存
         webSettings.setDatabaseEnabled(true);  //默认false
+        //能够存储结构复杂的数据，能充分利用数据库的优势，可方便对数据进行增加、删除、修改、查询。
 
         //APP缓存
         String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath();
@@ -343,6 +346,8 @@ public class MyWebAct extends FragmentActivity {
         //noinspection deprecation
         webSettings.setAppCacheMaxSize(1024 * 1024 * 10);//APP缓存大小：10M
         webSettings.setAppCacheEnabled(true);//默认false
+        //我们能够有选择的缓冲web浏览器中所有的东西，从页面、图片到脚本、css等等。
+        //尤其在涉及到应用于网站的多个页面上的CSS和JavaScript文件的时候非常有用。
 
         //缓存模式
         if (isNetworkAvailable(this)) {
@@ -350,7 +355,13 @@ public class MyWebAct extends FragmentActivity {
         } else {
             webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         }
-
+//LOAD_CACHE_ONLY: 不使用网络，只读取本地缓存数据
+//LOAD_DEFAULT: 根据cache-control决定是否从网络上取数据。默认
+//LOAD_CACHE_NORMAL: API level 17中已经废弃, 从API level 11开始作用同LOAD_DEFAULT模式
+//LOAD_NO_CACHE: 不使用缓存，只从网络获取数据.
+//LOAD_CACHE_ELSE_NETWORK，只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。优先缓存
+        
+        
         /* ------------------------------访问文件------------------------------ */
         /* ------------------------------访问文件------------------------------ */
 
